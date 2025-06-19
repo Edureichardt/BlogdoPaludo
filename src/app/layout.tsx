@@ -17,6 +17,9 @@ export const metadata:Metadata= {
   description: 'Seu blog sobre direito e atualidades jurídicas',
   icons: {
     icon: '/favicon-paludo.ico',
+     },
+  verification: {
+    google: 'QUOLqHtBtgNnmEI9grUTsVLrdibZ5p9p6maNjh_EXwU',
     
   },
 }
