@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
 import {
   FaBalanceScale,
@@ -241,7 +242,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
           SOBRE
         </h3>
         <p className="text-[#c7b56a] text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans">
-          Olá, sou Paulo Cesar Paludo dos Santos, advogado atuante com sólida experiência nas áreas cível, previdenciária e trabalhista. Ao longo da minha trajetória, tenho me dedicado a oferecer soluções jurídicas eficazes, sempre com foco na necessidade de cada cliente.
+          Olá, sou Paulo Cesar Paludo dos Santos, advogado inscrito na OAB/PR sob o n° 74.680 e OAB/SC sob o n° 44.059 atuante com sólida experiência nas áreas cível, previdenciária e trabalhista. Ao longo da minha trajetória, tenho me dedicado a oferecer soluções jurídicas eficazes, sempre com foco na necessidade de cada cliente.
           Aqui, você encontra explicações jurídicas claras e atendimento personalizado, com respostas rápidas e total transparência ao longo de todo o processo. Atuo nos seguintes ramos do Direito:
           Cível: Direito de família (reconhecimento de paternidade, pensão alimentícia, divórcio), inventário, regularização de áreas e terrenos, direito do consumidor, entre outros.
           Trabalhista: Defesa de empregados e empregadores, sempre buscando a melhor solução e equilíbrio nas relações de trabalho.
@@ -329,7 +330,12 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
           <p className="flex justify-center items-center gap-2 text-[#d4af37]">
             <FaPhone /> (55) 47 99845 52091
           </p>
+          <p className="flex justify-center items-center gap-2 text-[#d4af37]">
+    paulopaludoadvogado@hotmail.com
+  </p>
+          
           <button
+          
             onClick={() => setShowPrivacy(true)}
             className="underline hover:text-[#c79c2f] cursor-pointer text-sm"
           >
