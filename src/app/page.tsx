@@ -155,7 +155,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
             ATUAÇÃO
           </a>
           <a href="#especializacoes" className="hover:text-[#c79c2f] transition-colors">
-            ESPECIALIZAÇÕES
+            SOBRE AS ÁREAS DE ATUAÇÃO
           </a>
           <a href="#contato" className="hover:text-[#c79c2f] transition-colors">
             CONTATO
@@ -243,16 +243,13 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         </h3>
         <p className="text-[#c7b56a] text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans">
           Olá, sou Paulo Cesar Paludo dos Santos, advogado inscrito na OAB/PR sob o n° 74.680 e OAB/SC sob o n° 44.059 atuante com sólida experiência nas áreas cível, previdenciária e trabalhista. Ao longo da minha trajetória, tenho me dedicado a oferecer soluções jurídicas eficazes, sempre com foco na necessidade de cada cliente.
-          Aqui, você encontra explicações jurídicas claras e atendimento personalizado, com respostas rápidas e total transparência ao longo de todo o processo. Atuo nos seguintes ramos do Direito:
-          Cível: Direito de família (reconhecimento de paternidade, pensão alimentícia, divórcio), inventário, regularização de áreas e terrenos, direito do consumidor, entre outros.
-          Trabalhista: Defesa de empregados e empregadores, sempre buscando a melhor solução e equilíbrio nas relações de trabalho.
-          Previdenciária: Auxílio na busca por aposentadorias, pensão por morte, auxílio-doença, BPC/LOAS e demais benefícios.
+          Aqui, você encontra explicações jurídicas claras e atendimento personalizado, com respostas rápidas e total transparência ao longo de todo o processo. Atuo na área do Direito Cícel,incoporando atuação no Direito Trabalhista e Previdenciário
           Meu compromisso é proporcionar segurança jurídica, acolhimento e um atendimento realmente ágil, para que você se sinta amparado em todas as etapas.
           Conte comigo para defender seus direitos, esclarecer dúvidas e buscar as melhores alternativas para o seu caso.
         </p>
       </section>
 
-      {/* Especializações (acordeon) */}
+      {/* Sobre as áreas de atuação (acordeon) */}
       <section
         id="especializacoes"
         className={`max-w-6xl mx-auto py-16 md:py-20 px-6 md:px-12 text-[#d4af37] transition-opacity duration-700 ease-in-out ${
@@ -260,7 +257,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         }`}
       >
         <h3 className="text-3xl font-bold mb-12 text-center border-b border-[#d4af37] pb-2">
-          ESPECIALIZAÇÕES
+          SOBRE AS ÁREAS DE ATUAÇÃO
         </h3>
         <div className="flex flex-col gap-4">
           {especializacoes.map(({ icon, title, desc }, i) => (
