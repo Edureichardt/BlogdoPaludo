@@ -12,17 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata:Metadata= {
-  title: 'Blog do Paludo',
-  description: 'Seu blog sobre direito e atualidades jurídicas',
+export const metadata: Metadata = {
+  title: 'Advogado Paludo | Direito em Rio Negro e Mafra',
+  description: 'Atendimento jurídico em Rio Negro (PR) e Mafra (SC) nas áreas cível, trabalhista e previdenciária. Fale com o Advogado Paludo.',
   icons: {
     icon: '/favicon-paludo.ico',
-     },
+  },
   verification: {
     google: 'QUOLqHtBtgNnmEI9grUTsVLrdibZ5p9p6maNjh_EXwU',
-    
   },
-}
+};
 
 export default function RootLayout({
   children,
@@ -31,9 +30,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LegalService",
+              "name": "Advogado Paludo",
+              "image": "https://blogdopaludo.com.br/logo.png", // Atualize se necessário
+              "url": "https://blogdopaludo.com.br",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Rio Negro",
+                "addressRegion": "PR",
+                "addressCountry": "BR"
+              },
+              "areaServed": ["Rio Negro", "Mafra"],
+              "telephone": "+5547998452091", // Atualize com o telefone real
+              "priceRange": "Sob consulta"
+            }),
+          }}
+        />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
