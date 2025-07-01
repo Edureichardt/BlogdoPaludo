@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { prisma } from '../../lib/prisma';
+import { prisma } from '@/lib/prisma';
+
 
 
 const SECRET_KEY = process.env.JWT_SECRET || "uma-chave-muito-secreta";
