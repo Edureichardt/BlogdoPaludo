@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 
 
 
-const SECRET_KEY = process.env.JWT_SECRET || "uma-chave-muito-secreta";
+const SECRET_KEY = process.env.JWT_SECRET || "6eedac37e27b4cd57a5f98f34d24bf15e6dfa74ba625e53c754120676831a317";
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
