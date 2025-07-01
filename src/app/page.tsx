@@ -1,5 +1,6 @@
 "use client";
 
+import { FiLock } from 'react-icons/fi';
 
 import { useEffect, useState } from "react";
 import {
@@ -436,17 +437,29 @@ vigente e aprimoramento das práticas de privacidade.
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#121212] py-6 px-4 text-sm text-[#bfa845] flex flex-col items-center justify-center">
-        <span>© 2025 Paludo Advocacia. Todos os direitos reservados.</span>
-        <a
-          href="https://www.instagram.com/edu_reichardt/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-[#c79c2f] mt-2"
-        >
-          Desenvolvido por EduReichardt
-        </a>
-      </footer>
+ <footer className="bg-[#121212] py-6 px-4 text-sm text-[#bfa845] flex flex-col items-center justify-center gap-2">
+  <span>© 2025 Paludo Advocacia. Todos os direitos reservados.</span>
+  <a
+    href="https://www.instagram.com/edu_reichardt/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-[#c79c2f]"
+  >
+    Desenvolvido por EduReichardt
+  </a>
+
+  {/* Ícone de cadeado para área de login */}
+  <a
+    href="/admin"
+    aria-label="Área de Login"
+    title="Área de Login"
+    className="mt-2 flex items-center text-[#d4af37] hover:text-[#c79c2f] transition-colors"
+  >
+    <FiLock size={24} />
+  </a>
+</footer>
+
+
 
       {/* Animação do glow */}
       <style jsx>{`
