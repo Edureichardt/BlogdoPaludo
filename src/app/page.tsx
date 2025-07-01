@@ -452,7 +452,7 @@ vigente e aprimoramento das práticas de privacidade.
   <a
     href="/admin"
     aria-label="Área de Login"
-    title="Área de Login"
+    title=""
     className="mt-2 flex items-center text-[#d4af37] hover:text-[#c79c2f] transition-colors"
   >
     <FiLock size={24} />
