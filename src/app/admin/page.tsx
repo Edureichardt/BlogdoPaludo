@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FiLogOut } from 'react-icons/fi';
+
 
 function Cronometro({ total }: { total: number }) {
   const [contador, setContador] = useState(0);

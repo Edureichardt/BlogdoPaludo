@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: Request) {
+export async function GET(){
   try {
     // Busca o total real de visitas no banco
     const totalVisitas = await prisma.visita.count();
