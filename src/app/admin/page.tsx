@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { FiLogOut, FiEye, FiEyeOff } from 'react-icons/fi';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { FiLogOut } from 'react-icons/fi';
 
 function Cronometro({ total }: { total: number }) {
   const [contador, setContador] = useState(0);
@@ -71,46 +70,14 @@ function Cronometro({ total }: { total: number }) {
 }
 
 export default function Admin() {
-  const [senha, setSenha] = useState('');
-  const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [acessoLiberado, setAcessoLiberado] = useState(false);
   const [total, setTotal] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
-
-  const logout = useCallback(() => {
-    localStorage.removeItem('tokenAdvogado');
-    setAcessoLiberado(false);
-    setSenha('');
-    setTotal(null);
-    router.push('/');
-  }, [router]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('tokenAdvogado');
-    if (token) {
-      setAcessoLiberado(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!acessoLiberado) return;
-
-    const token = localStorage.getItem('tokenAdvogado');
-    if (!token) {
-      logout();
-      return;
-    }
-
-    fetch('/api/visitas', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
+    fetch('/api/visitas')
       .then(async (res) => {
         if (!res.ok) {
-          throw new Error('Token inválido ou expirado');
+          throw new Error('Erro ao carregar visitas');
         }
         const data = await res.json();
         return data;
@@ -122,69 +89,15 @@ export default function Admin() {
           throw new Error('Resposta inválida da API');
         }
       })
-      .catch(() => {
-        alert('Erro ao carregar visitas. Faça login novamente.');
-        logout();
+      .catch((err) => {
+        setError(err.message);
       });
-  }, [acessoLiberado, logout]);
+  }, []);
 
-  const verificarSenha = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senha }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || 'Erro na autenticação');
-        setLoading(false);
-        return;
-      }
-
-      localStorage.setItem('tokenAdvogado', data.token);
-      setAcessoLiberado(true);
-      setLoading(false);
-    } catch {
-      alert('Erro no servidor');
-      setLoading(false);
-    }
-  };
-
-  if (!acessoLiberado) {
+  if (error) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-black bg-opacity-90 px-4">
-        <div className="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full border border-gray-700 relative">
-          <h1 className="text-2xl font-semibold mb-6 text-gray-100 text-center">
-            Área Restrita
-          </h1>
-          <div className="relative">
-            <input
-              type={mostrarSenha ? 'text' : 'password'}
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="Digite a senha"
-              className="border border-gray-600 bg-gray-700 text-gray-100 rounded-md p-3 w-full pr-10 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            />
-            <button
-              type="button"
-              onClick={() => setMostrarSenha(!mostrarSenha)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 focus:outline-none"
-              aria-label={mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'}
-            >
-              {mostrarSenha ? <FiEyeOff /> : <FiEye />}
-            </button>
-          </div>
-          <button
-            onClick={verificarSenha}
-            disabled={loading}
-            className="bg-gray-600 hover:bg-gray-700 text-white rounded-md py-3 w-full font-semibold mt-6 transition disabled:opacity-50"
-          >
-            {loading ? 'Validando...' : 'Entrar'}
-          </button>
-        </div>
+      <div className="min-h-screen flex justify-center items-center bg-gray-900 text-red-400 p-4">
+        <p>{error}</p>
       </div>
     );
   }
@@ -198,17 +111,6 @@ export default function Admin() {
         ) : (
           <p className="text-gray-400 mb-6">Carregando visitas...</p>
         )}
-        <footer className="mt-auto w-full flex justify-center pt-8 border-t border-gray-700">
-          <button
-            aria-label="Voltar para login"
-            title="Sair do painel"
-            onClick={logout}
-            className="text-gray-400 hover:text-gray-200 transition text-2xl flex items-center gap-2"
-          >
-            <FiLogOut />
-            <span className="hidden sm:inline">Sair</span>
-          </button>
-        </footer>
       </div>
     </div>
   );
