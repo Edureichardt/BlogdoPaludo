@@ -83,6 +83,7 @@ export default function Admin() {
     localStorage.removeItem('tokenAdvogado');
     setAcessoLiberado(false);
     setSenha('');
+    setTotal(null);
     router.push('/');
   }, [router]);
 
@@ -94,25 +95,37 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    if (acessoLiberado) {
-      fetch('/api/visitas', {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tokenAdvogado'),
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.total !== undefined) {
-            setTotal(data.total);
-          } else {
-            throw new Error('Token expirado');
-          }
-        })
-        .catch(() => {
-          alert('Erro ao carregar visitas. Faça login novamente.');
-          logout();
-        });
+    if (!acessoLiberado) return;
+
+    const token = localStorage.getItem('tokenAdvogado');
+    if (!token) {
+      logout();
+      return;
     }
+
+    fetch('/api/visitas', {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Token inválido ou expirado');
+        }
+        const data = await res.json();
+        return data;
+      })
+      .then((data) => {
+        if (typeof data.total === 'number') {
+          setTotal(data.total);
+        } else {
+          throw new Error('Resposta inválida da API');
+        }
+      })
+      .catch(() => {
+        alert('Erro ao carregar visitas. Faça login novamente.');
+        logout();
+      });
   }, [acessoLiberado, logout]);
 
   const verificarSenha = async () => {
