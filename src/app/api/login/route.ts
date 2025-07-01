@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.JWT_SECRET || "uma-chave-muito-secreta"; // Troque pela variável de ambiente
+const SECRET_KEY = process.env.JWT_SECRET || "6eedac37e27b4cd57a5f98f34d24bf15e6dfa74ba625e53c754120676831a317"; // Troque pela variável de ambiente
 
 export async function POST(request: Request) {
   try {
