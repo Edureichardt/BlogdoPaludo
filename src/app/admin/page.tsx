@@ -1,13 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { FiLogOut, FiEye, FiEyeOff } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 
-function Visitas({ total }: { total: number }) {
+function Cronometro({ total }: { total: number }) {
+  const [contador, setContador] = useState(0);
+
+  useEffect(() => {
+    setContador(0);
+  }, [total]);
+
+  useEffect(() => {
+    if (typeof total !== 'number' || isNaN(total) || total <= 0) return;
+    if (contador >= total) return;
+
+    const timeout = setTimeout(() => {
+      setContador((c) => Math.min(c + 1, total));
+    }, 30);
+
+    return () => clearTimeout(timeout);
+  }, [contador, total]);
+
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
-  const progress = (total / total) * circumference;
+  const progress = total > 0 ? (contador / total) * circumference : 0;
   const strokeDashoffset = circumference - progress;
 
   return (
@@ -16,7 +33,7 @@ function Visitas({ total }: { total: number }) {
         width="160"
         height="160"
         className="transform -rotate-90 drop-shadow-lg"
-        aria-label="Visitas"
+        aria-label="Cronômetro de visitas"
         role="img"
       >
         <circle
@@ -41,7 +58,7 @@ function Visitas({ total }: { total: number }) {
         />
       </svg>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-5xl font-bold select-none pointer-events-none">
-        {total}
+        {contador}
       </div>
       <p className="mt-6 text-gray-300 text-lg font-medium tracking-wide uppercase">
         Total de Visitas
@@ -62,6 +79,13 @@ export default function Admin() {
 
   const router = useRouter();
 
+  const logout = useCallback(() => {
+    localStorage.removeItem('tokenAdvogado');
+    setAcessoLiberado(false);
+    setSenha('');
+    router.push('/');
+  }, [router]);
+
   useEffect(() => {
     const token = localStorage.getItem('tokenAdvogado');
     if (token) {
@@ -78,7 +102,7 @@ export default function Admin() {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (typeof data.total === 'number') {
+          if (data.total !== undefined) {
             setTotal(data.total);
           } else {
             throw new Error('Token expirado');
@@ -89,7 +113,7 @@ export default function Admin() {
           logout();
         });
     }
-  }, [acessoLiberado]);
+  }, [acessoLiberado, logout]);
 
   const verificarSenha = async () => {
     setLoading(true);
@@ -110,17 +134,10 @@ export default function Admin() {
       localStorage.setItem('tokenAdvogado', data.token);
       setAcessoLiberado(true);
       setLoading(false);
-    } catch (err) {
+    } catch {
       alert('Erro no servidor');
       setLoading(false);
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('tokenAdvogado');
-    setAcessoLiberado(false);
-    setSenha('');
-    router.push('/');
   };
 
   if (!acessoLiberado) {
@@ -164,7 +181,7 @@ export default function Admin() {
       <div className="bg-gray-800 rounded-lg shadow-lg p-10 max-w-sm w-full border border-gray-700 text-center flex flex-col items-center">
         <h1 className="text-3xl font-semibold mb-10 text-gray-100">Painel do Advogado</h1>
         {total !== null ? (
-          <Visitas total={total} />
+          <Cronometro total={total} />
         ) : (
           <p className="text-gray-400 mb-6">Carregando visitas...</p>
         )}

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.JWT_SECRET || "uma-chave-muito-secreta"; // Depois troque pela variável de ambiente
+const SECRET_KEY = process.env.JWT_SECRET || "uma-chave-muito-secreta"; // Troque pela variável de ambiente
 
 export async function POST(request: Request) {
   try {
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const token = jwt.sign({ role: "advogado" }, SECRET_KEY, { expiresIn: "1h" });
 
     return NextResponse.json({ token });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Erro no servidor" }, { status: 500 });
   }
 }
