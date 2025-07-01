@@ -1,7 +1,4 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-
-const SECRET_KEY = process.env.JWT_SECRET || "postgresql://postgres.frzwsdohmsmowwgpiixl:[abcd9195fe]@aws-0-us-east-2.pooler.supabase.com:6543/postgres"; // Troque pela variável de ambiente
 
 export async function POST(request: Request) {
   try {
@@ -13,10 +10,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Senha incorreta" }, { status: 401 });
     }
 
-    // Gera token JWT válido por 1 hora
-    const token = jwt.sign({ role: "advogado" }, SECRET_KEY, { expiresIn: "1h" });
-
-    return NextResponse.json({ token });
+    // Não gera token, só diz que senha está ok
+    return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Erro no servidor" }, { status: 500 });
   }
