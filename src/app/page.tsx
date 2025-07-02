@@ -18,6 +18,10 @@ export default function Home() {
   const [visibleSections, setVisibleSections] = useState<{ [key: string]: boolean }>({});
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [especializacoesOpenIndex, setEspecializacoesOpenIndex] = useState<number | null>(null);
+  useEffect(() => {
+  fetch("/api/visitas", { method: "POST" });
+}, []);
+
 
   useEffect(() => {
     function handleScroll() {
