@@ -9,8 +9,8 @@ import {
   FaUserTie,
   FaWhatsapp,
   FaPhone,
-  FaFacebookF,
-  FaInstagram,
+  
+  
 } from "react-icons/fa";
 import Image from "next/image";
 
@@ -117,24 +117,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         >
           <FaWhatsapp className="text-black text-2xl" />
         </a>
-        <a
-          href="https://www.facebook.com/paulo.paludo.1"
-          className="bg-[#d4af37] hover:bg-[#c79c2f] p-4 rounded-full shadow-lg transition-all duration-300 shadow-[#3b5998]/90 hover:shadow-[#2d4373]/90 animate-glow"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-        >
-          <FaFacebookF className="text-white text-2xl" />
-        </a>
-        <a
-          href="https://www.instagram.com/paulopaludoadvogado/"
-          className="bg-[#d4af37] hover:bg-[#c79c2f] p-4 rounded-full shadow-lg transition-all duration-300 shadow-[#e1306c]/90 hover:shadow-[#b42e58]/90 animate-glow"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-        >
-          <FaInstagram className="text-white text-2xl" />
-        </a>
+        
       </div>
 
       {/* Header */}
@@ -200,17 +183,16 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         }`}
       >
         <div>
-          <h3 className="text-3xl font-bold mb-6 border-b border-[#d4af37] pb-2">APRESENTAÇÃO</h3>
-          <div className="aspect-video rounded-lg overflow-hidden border border-[#d4af37] shadow-lg">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/YOUTUBE_ID_AQUI"
-              title="Vídeo Institucional"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+  <h3 className="text-3xl font-bold mb-6 border-[#d4af37] pb-2"></h3>
+  <div className="aspect-video rounded-lg overflow-hidden border border-[#d4af37] shadow-lg">
+    <img
+      src="/balanca.png"
+      alt="Paludo"
+      className="w-full h-full object-contain"
+    />
+  </div>
+
+
         </div>
         <div>
           <h3 className="text-3xl font-bold mb-6 border-b border-[#d4af37] pb-2">ÁREAS DE ATUAÇÃO</h3>
@@ -248,7 +230,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         </h3>
         <p className="text-[#c7b56a] text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-sans">
           Olá, sou Paulo Cesar Paludo dos Santos, advogado inscrito na OAB/PR sob o n° 74.680 e OAB/SC sob o n° 44.059 atuante com sólida experiência nas áreas cível, previdenciária e trabalhista. Ao longo da minha trajetória, tenho me dedicado a oferecer soluções jurídicas eficazes, sempre com foco na necessidade de cada cliente.
-          Aqui, você encontra explicações jurídicas claras e atendimento personalizado, com respostas rápidas e total transparência ao longo de todo o processo. Atuo na área do Direito Cícel,incoporando atuação no Direito Trabalhista e Previdenciário
+          Aqui, você encontra explicações jurídicas claras e atendimento personalizado, com respostas rápidas e total transparência ao longo de todo o processo. Atuo na área do Direito Cível,incoporando atuação no Direito Trabalhista e Previdenciário
           Meu compromisso é proporcionar segurança jurídica, acolhimento e um atendimento realmente ágil, para que você se sinta amparado em todas as etapas.
           Conte comigo para defender seus direitos, esclarecer dúvidas e buscar as melhores alternativas para o seu caso.
         </p>
