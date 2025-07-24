@@ -312,7 +312,7 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         </form>
         <div className="mt-6 flex flex-col items-center gap-4">
           <p className="flex justify-center items-center gap-2 text-[#d4af37]">
-            <FaPhone /> (55) 47 99845 2091
+            <FaPhone /> (55) 47 9984552091
           </p>
           <p className="flex justify-center items-center gap-2 text-[#d4af37]">
     paulopaludoadvogado@hotmail.com
