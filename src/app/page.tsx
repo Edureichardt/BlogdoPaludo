@@ -426,7 +426,7 @@ vigente e aprimoramento das práticas de privacidade.
  <footer className="bg-[#121212] py-6 px-4 text-sm text-[#bfa845] flex flex-col items-center justify-center gap-2">
   <span>© 2025 Paludo Advocacia. Todos os direitos reservados.</span>
   <a
-    href="https://www.instagram.com/edu_reichardt/"
+    href="https://www.instagram.com/reichardt.dev/"
     target="_blank"
     rel="noopener noreferrer"
     className="hover:text-[#c79c2f]"
