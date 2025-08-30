@@ -72,7 +72,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     } else {
       setStatus("Erro ao enviar. Tente novamente.");
     }
-  } catch (_err) {
+  } catch  {
     setStatus("Erro no servidor.");
   }
 };
