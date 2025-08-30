@@ -18,6 +18,8 @@ export default function Home() {
   const [visibleSections, setVisibleSections] = useState<{ [key: string]: boolean }>({});
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [especializacoesOpenIndex, setEspecializacoesOpenIndex] = useState<number | null>(null);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("");
   useEffect(() => {
   fetch("/api/visitas", { method: "POST" });
 }, []);
@@ -49,6 +51,31 @@ export default function Home() {
   const toggleEspecializacao = (index: number) => {
     setEspecializacoesOpenIndex(especializacoesOpenIndex === index ? null : index);
   };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  setForm({ ...form, [e.target.name]: e.target.value });
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setStatus("Enviando...");
+
+  try {
+    const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      setStatus("Mensagem enviada com sucesso!");
+      setForm({ name: "", email: "", message: "" });
+    } else {
+      setStatus("Erro ao enviar. Tente novamente.");
+    }
+  } catch (err) {
+    setStatus("Erro no servidor.");
+  }
+};
 
   const especializacoes = [
     {
@@ -287,29 +314,44 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
         <h3 className="text-3xl font-bold mb-8 text-center border-b border-[#d4af37] pb-2 inline-block">
           CONTATO
         </h3>
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            placeholder="Seu nome"
-            className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37] placeholder-[#a99d5a] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-          />
-          <input
-            type="email"
-            placeholder="Seu email"
-            className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37] placeholder-[#a99d5a] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-          />
-          <textarea
-            placeholder="Sua mensagem"
-            rows={5}
-            className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37] placeholder-[#a99d5a] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-          />
-          <button
-            type="submit"
-            className="w-full bg-[#d4af37] hover:bg-[#c79c2f] text-black font-semibold py-3 rounded-full shadow-md transition hover:scale-105"
-          >
-            Enviar Mensagem
-          </button>
-        </form>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+  <input
+    type="text"
+    name="name"
+    value={form.name}
+    onChange={handleChange}
+    placeholder="Seu nome"
+    required
+    className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37]"
+  />
+  <input
+    type="email"
+    name="email"
+    value={form.email}
+    onChange={handleChange}
+    placeholder="Seu email"
+    required
+    className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37]"
+  />
+  <textarea
+    name="message"
+    value={form.message}
+    onChange={handleChange}
+    placeholder="Sua mensagem"
+    rows={5}
+    required
+    className="w-full p-3 rounded border border-[#c7b56a] bg-[#1c1c1c] text-[#d4af37]"
+  />
+  <button
+    type="submit"
+    className="w-full bg-[#d4af37] hover:bg-[#c79c2f] text-black font-semibold py-3 rounded-full shadow-md transition hover:scale-105"
+  >
+    Enviar Mensagem
+  </button>
+</form>
+
+{status && <p className="mt-2 text-center text-sm">{status}</p>}
+
         <div className="mt-6 flex flex-col items-center gap-4">
           <p className="flex justify-center items-center gap-2 text-[#d4af37]">
             <FaPhone /> (55) 47 984552091
