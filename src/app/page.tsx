@@ -158,8 +158,8 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
             className="rounded-full shadow-lg"
             priority
           />
-          <h1 className="text-2xl md:text-3xl font-bold tracking-wide text-[#3cd437]">
-            PALUDO utftfytf
+          <h1 className="text-2xl md:text-3xl font-bold tracking-wide text-[#c7b519]">
+            PALUDO 
           </h1>
         </div>
         <nav className="hidden md:flex space-x-8 text-lg font-semibold text-[#d4af37] font-sans">
