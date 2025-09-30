@@ -473,7 +473,7 @@ vigente e aprimoramento das práticas de privacidade.
     rel="noopener noreferrer"
     className="hover:text-[#c79c2f]"
   >
-    Desenvolvido por ReichardtDev's
+    Desenvolvido por ReichardtDevs
   </a>
 
   {/* Ícone de cadeado para área de login */}
