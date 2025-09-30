@@ -1,6 +1,6 @@
 "use client";
 
-import { FiLock } from 'react-icons/fi';
+import {FiLock } from 'react-icons/fi';
 
 import { useEffect, useState } from "react";
 import {
@@ -158,8 +158,8 @@ Requerimento e defesa do direito ao Benefício de Prestação Continuada para id
             className="rounded-full shadow-lg"
             priority
           />
-          <h1 className="text-2xl md:text-3xl font-bold tracking-wide text-[#d4af37]">
-            PALUDO
+          <h1 className="text-2xl md:text-3xl font-bold tracking-wide text-[#3cd437]">
+            PALUDO utftfytf
           </h1>
         </div>
         <nav className="hidden md:flex space-x-8 text-lg font-semibold text-[#d4af37] font-sans">
@@ -468,12 +468,12 @@ vigente e aprimoramento das práticas de privacidade.
  <footer className="bg-[#121212] py-6 px-4 text-sm text-[#bfa845] flex flex-col items-center justify-center gap-2">
   <span>© 2025 Paludo Advocacia. Todos os direitos reservados.</span>
   <a
-    href="https://www.instagram.com/reichardt.dev/"
+    href="https://www.instagram.com/reichardtdevs/"
     target="_blank"
     rel="noopener noreferrer"
     className="hover:text-[#c79c2f]"
   >
-    Desenvolvido por EduReichardt
+    Desenvolvido por ReichardtDev's
   </a>
 
   {/* Ícone de cadeado para área de login */}

@@ -7,9 +7,7 @@ import { useRouter } from 'next/navigation';
 function Cronometro({ total }: { total: number }) {
   const [contador, setContador] = useState(0);
 
-  useEffect(() => {
-    setContador(0);
-  }, [total]);
+  useEffect(() => setContador(0), [total]);
 
   useEffect(() => {
     if (typeof total !== 'number' || isNaN(total) || total <= 0) return;
@@ -70,28 +68,37 @@ function Cronometro({ total }: { total: number }) {
   );
 }
 
+interface Visita {
+  ip: string;
+  userAgent: string;
+  createdAt: string;
+}
+
 export default function Admin() {
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [acessoLiberado, setAcessoLiberado] = useState(false);
   const [total, setTotal] = useState<number | null>(null);
+  const [ips, setIps] = useState<Visita[]>([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const router = useRouter();
+  const limit = 20;
 
   const logout = useCallback(() => {
     localStorage.removeItem('tokenAdvogado');
     setAcessoLiberado(false);
     setSenha('');
     setTotal(null);
-    router.push('/');  // Redireciona para a home pública
+    setIps([]);
+    router.push('/');
   }, [router]);
 
   useEffect(() => {
     const token = localStorage.getItem('tokenAdvogado');
-    if (token) {
-      setAcessoLiberado(true);
-    }
+    if (token) setAcessoLiberado(true);
   }, []);
 
   useEffect(() => {
@@ -104,23 +111,15 @@ export default function Admin() {
     }
 
     fetch('/api/visitas', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+      headers: { Authorization: 'Bearer ' + token },
     })
       .then(async (res) => {
-        if (!res.ok) {
-          throw new Error('Token inválido ou expirado');
-        }
+        if (!res.ok) throw new Error('Token inválido ou expirado');
         const data = await res.json();
         return data;
       })
       .then((data) => {
-        if (typeof data.total === 'number') {
-          setTotal(data.total);
-        } else {
-          throw new Error('Resposta inválida da API');
-        }
+        if (typeof data.total === 'number') setTotal(data.total);
       })
       .catch(() => {
         alert('Erro ao carregar visitas. Faça login novamente.');
@@ -137,13 +136,11 @@ export default function Admin() {
         body: JSON.stringify({ senha }),
       });
       const data = await res.json();
-
       if (!res.ok) {
         alert(data.error || 'Erro na autenticação');
         setLoading(false);
         return;
       }
-
       localStorage.setItem('tokenAdvogado', data.token);
       setAcessoLiberado(true);
       setLoading(false);
@@ -153,7 +150,25 @@ export default function Admin() {
     }
   };
 
-  if (!acessoLiberado) {
+  const carregarIps = async (pageNumber = 1) => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('tokenAdvogado');
+      const res = await fetch(`/api/visitas?page=${pageNumber}&limit=${limit}`, {
+        headers: { Authorization: 'Bearer ' + token },
+      });
+      const data = await res.json();
+      setIps(data.visitas);
+      setPage(data.page);
+      setTotalPages(data.totalPages);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!acessoLiberado) { 
     return (
       <div className="min-h-screen flex justify-center items-center bg-black bg-opacity-90 px-4">
         <div className="bg-gray-800 rounded-lg shadow-lg p-8 max-w-sm w-full border border-gray-700 relative">
@@ -191,14 +206,56 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900 px-4">
-      <div className="bg-gray-800 rounded-lg shadow-lg p-10 max-w-sm w-full border border-gray-700 text-center flex flex-col items-center">
+      <div className="bg-gray-800 rounded-lg shadow-lg p-10 max-w-2xl w-full border border-gray-700 text-center flex flex-col items-center">
         <h1 className="text-3xl font-semibold mb-10 text-gray-100">Painel do Advogado</h1>
-        {total !== null ? (
-          <Cronometro total={total} />
-        ) : (
-          <p className="text-gray-400 mb-6">Carregando visitas...</p>
-        )}
-        <footer className="mt-auto w-full flex justify-center pt-8 border-t border-gray-700">
+        {total !== null ? <Cronometro total={total} /> : <p className="text-gray-400 mb-6">Carregando visitas...</p>}
+
+        <div className="mt-10 w-full">
+          <h2 className="text-xl text-gray-200 mb-4">Lista de IPs</h2>
+          <button
+            onClick={() => carregarIps(page)}
+            disabled={loading}
+            className="mb-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 font-semibold transition disabled:opacity-50"
+          >
+            {loading ? 'Carregando...' : 'Atualizar IPs'}
+          </button>
+
+          {ips.length > 0 ? (
+            <ul className="text-left text-gray-100 max-h-64 overflow-y-auto border border-gray-700 rounded-md p-4">
+              {ips.map((v, i) => (
+                <li key={i} className="border-b border-gray-700 py-1">
+                  {v.ip} - {new Date(v.createdAt).toLocaleString()} - {v.userAgent}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-400">Nenhuma visita registrada.</p>
+          )}
+
+          {ips.length > 0 && (
+            <div className="mt-4 flex justify-center items-center gap-4">
+              <button
+                onClick={() => carregarIps(page - 1)}
+                disabled={page <= 1 || loading}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded disabled:opacity-50"
+              >
+                Anterior
+              </button>
+              <span className="text-gray-300">
+                Página {page} de {totalPages}
+              </span>
+              <button
+                onClick={() => carregarIps(page + 1)}
+                disabled={page >= totalPages || loading}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded disabled:opacity-50"
+              >
+                Próximo
+              </button>
+            </div>
+          )}
+        </div>
+
+        <footer className="mt-8 w-full flex justify-center pt-8 border-t border-gray-700">
           <button
             aria-label="Voltar para login"
             title="Sair do painel"
